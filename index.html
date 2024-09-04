@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lottery</title>
+    <link rel="stylesheet" href="./style.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <script src="./script.js"></script>
+    <img src="./logo.png" alt="Fauna Mart">
+    <h1>Lottery</h1>
+    <h3>Instructions</h3>
+    <p>Pressing the <b>Generate</b> button adds <b>Amount</b> number of random entries for <b>Name</b>. <br>
+        Pressing the <b>Add</b> button adds a ticket with <b>Number</b> for <b>Name</b> if available and valid. <br>
+        Pressing the <b>Pick Winner</b> button selects a random valid number as the <b>Winner</b>. <br>
+        <b>REFRESHING THE PAGE CLEARS ALL RESULTS</b>
+    </p>
+    <h2>Winner</h2>
+    <h3 id="winner">-<br>-</h3>
+    <button type="button" onclick="pickWinner()">Pick Winner</button>
+    <br>
+    <br>
+    <label for="name">Name: </label><input type="text" id="name" name="name" value="Fauna"><br>
+    <table>
+        <tr>
+            <td>
+                <label for="amount">Amount: </label><input type="number" id="amount" name="amount" value=1><br>
+                <button type="button" onclick="assign()">Generate</button>
+            </td>
+            <td>
+                <label for="number">Number: </label><input type="number" id="number" name="number" value=123><br>
+                <button type="button" onclick="assignCustom()">Add</button>
+            </td>
+        </tr>
+    </table>
+    <div id="warning"></div>
+    <br>
+    <button type="button" onclick="saveResults()">Save Tickets</button>
+    <div id="count"></div>
+    <table id="results">
+        <tr>
+            <th>Name</th>
+            <th>Number</th>
+        </tr>
+    </table>
+    <script>generateValidNumbers();</script>
+</body>
+
+</html>
