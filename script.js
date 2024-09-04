@@ -1,15 +1,5 @@
-// ============================================
-// Change these numbers to configure lottery
-// ============================================
-const numberOfDigitsToGenerate = 3;
-const lowestDigitToGenerate = 1;
-const highestDigitToGenerate = 9;
-// ============================================
-
 var validNumbers = [];
 var availableNumbers = [];
-
-var numbers = [];
 var entries = new Map();
 
 function generateValidNumbers() {
@@ -64,7 +54,6 @@ function assign() {
         availableNumbers.splice(index, 1);
     }
 
-    // document.getElementById("results").firstElementChild.innerHTML = "<tr><th>Name</th><th>Number (" + availableNumbers.length + ")</th></tr>";
     updateTicketCount();
 }
 
@@ -84,7 +73,6 @@ function assignCustom() {
         entries.set(num, name);
         document.getElementById("results").innerHTML += "<tr><td>" + name + "</td><td>" + num + "</td></tr>";
         availableNumbers.splice(index, 1);
-        // document.getElementById("results").firstElementChild.innerHTML = "<tr><th>Name</th><th>Number (" + availableNumbers.length + ")</th></tr>";
         updateTicketCount();
     }
     else if (validNumbers.includes(customNumber)) {
@@ -95,67 +83,13 @@ function assignCustom() {
     }
 }
 
-function generate() {
-    document.getElementById("warning").innerHTML = "";
-    var name = document.getElementById("name").value;
-    for (let i = 0; i < document.getElementById("amount").value; i++) {
-        var num = generateNumber(numberOfDigitsToGenerate);
-        entries.set(num, name);
-        document.getElementById("results").innerHTML += "<tr><td>" + name + "</td><td>" + num + "</td></tr>";
-    }
-
-    document.getElementById("results").firstElementChild.innerHTML = "<tr><th>Name</th><th>Number (" + numbers.length + ")</th></tr>";
-}
-
 function pickWinner() {
-    // var winningNumber = numbers[getRandomInt(numbers.length - 1)];
     var winningNumber = validNumbers[getRandomInt(validNumbers.length - 1)];
     var winner = "None";
     if (entries.has(winningNumber)){
         winner = entries.get(winningNumber);
     }
     document.getElementById("winner").innerHTML = winningNumber + "<br>" + winner;
-}
-
-function generateNumber(numberOfDigits) {
-    var total = 0;
-    var pow = 10;
-    for (let i = 0; i < numberOfDigits; i++) {
-        if (i == 0) {
-            total = generateDigit(lowestDigitToGenerate, highestDigitToGenerate);
-        }
-        else {
-            total += generateDigit(lowestDigitToGenerate, highestDigitToGenerate) * pow;
-            pow *= 10;
-        }
-    }
-
-    if (numbers.includes(total)) {
-        total = generateNumber(numberOfDigits);
-        return total;
-    }
-    numbers.push(total);
-
-    return total;
-}
-
-function generateDigit(lowestDigit, highestDigit) {
-    if (highestDigit > 9) {
-        throw new Error('highestDigit is more than one digit.');
-    }
-    if (lowestDigit > 9) {
-        throw new Error('lowestDigit is more than one digit.');
-    }
-    if (highestDigit < 0) {
-        throw new Error('highestDigit is negative.');
-    }
-    if (lowestDigit < 0) {
-        throw new Error('lowestDigit is negative.');
-    }
-    if (lowestDigit > highestDigit) {
-        throw new Error('lowestDigit is greater than highestDigit. highestDigit must always be bigger than lowerDigit');
-    }
-    return getRandomInt(highestDigit - lowestDigit) + lowestDigit;
 }
 
 function getRandomInt(max) {
