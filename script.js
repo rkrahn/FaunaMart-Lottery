@@ -3,6 +3,8 @@ var availableNumbers = [];
 var entries = new Map();
 
 function generateValidNumbers() {
+    clearAll();
+    document.getElementById("header").innerHTML = "Lottery V1";
     var validNumber;
     for (let a = 1; a <= 9; a++) {
         for (let b = 1; b <= 9; b++) {
@@ -27,6 +29,26 @@ function generateValidNumbers() {
     availableNumbers = Array.from(validNumbers);
     console.log(availableNumbers);
     updateTicketCount();
+}
+
+function generateValidNumbersV2() {
+    clearAll();
+    document.getElementById("header").innerHTML = "Lottery V2";
+    for (let a = 0; a <= 999; a++) {
+        validNumbers.push(a);
+    }
+    availableNumbers = Array.from(validNumbers);
+    console.log(availableNumbers);
+    updateTicketCount();
+}
+
+function clearAll() {
+    document.getElementById("warning").innerHTML = "";
+    document.getElementById("winner").innerHTML = "-<br>-";
+    document.getElementById("results").innerHTML = "<tr><th>Name</th><th>Number</th></tr>";
+    validNumbers = [];
+    availableNumbers = [];
+    entries = new Map();
 }
 
 function updateTicketCount() {
@@ -146,7 +168,7 @@ function loadEntry(key, value) {
         document.getElementById("warning").innerHTML = "No tickets left!";
         return;
     }
-    
+
     var name = value;
     var customNumber = Number(key);
     console.log(customNumber);
