@@ -18,11 +18,15 @@
     <h1 id="header">Lottery</h1>
     <button type="button" onclick="generateValidNumbers()">Version 1</button>
     <button type="button" onclick="generateValidNumbersV2()">Version 2</button>
+    <p>Version 1: 3 digits, no duplicate digits, no zeros. <br>
+        Version 2: Any 3 digits.
+    </p>
     <h3>Instructions</h3>
     <p>Pressing the <b>Generate</b> button adds <b>Amount</b> number of random entries for <b>Name</b>. <br>
         Pressing the <b>Add</b> button adds a ticket with <b>Number</b> for <b>Name</b> if available and valid. <br>
         The <b>Save Tickets</b> button saves all tickets to a JSON file. <br>
-        The <b>Choose File</b> button can load a previously saved JSON file and adds the tickets to the current ticket list. <br>
+        The <b>Choose File</b> button can load a previously saved JSON file and adds the tickets to the current ticket
+        list. <br>
         Pressing the <b>Pick Winner</b> button selects a random valid number as the <b>Winner</b>. <br>
         <b>REFRESHING THE PAGE CLEARS EVERYTHING</b>
     </p>
@@ -46,7 +50,8 @@
     </table>
     <div id="warning"></div>
     <br>
-    <label for="resultsFile">Load Tickets: </label><input type="file" id="resultsFile" name="resultsFile" accept="application/json" onchange="readFile(this)"><br>
+    <label for="resultsFile">Load Tickets: </label><input type="file" id="resultsFile" name="resultsFile"
+        accept="application/json" onchange="readFile(this)"><br>
     <button type="button" onclick="saveResults()">Save Tickets</button><br>
     <div id="count"></div>
     <table id="results">
