@@ -63,7 +63,7 @@ function assignCustom() {
         document.getElementById("warning").innerHTML = "No tickets left!";
         return;
     }
-    
+
     var name = document.getElementById("name").value;
     var customNumber = Number(document.getElementById("number").value);
     console.log(customNumber);
@@ -86,7 +86,7 @@ function assignCustom() {
 function pickWinner() {
     var winningNumber = validNumbers[getRandomInt(validNumbers.length - 1)];
     var winner = "None";
-    if (entries.has(winningNumber)){
+    if (entries.has(winningNumber)) {
         winner = entries.get(winningNumber);
     }
     document.getElementById("winner").innerHTML = winningNumber + "<br>" + winner;
@@ -101,19 +101,67 @@ function saveResults() {
 }
 
 function download(data, filename, type) {
-    var file = new Blob([data], {type: type});
+    var file = new Blob([data], { type: type });
     if (window.navigator.msSaveOrOpenBlob) // IE10+
         window.navigator.msSaveOrOpenBlob(file, filename);
     else { // Others
         var a = document.createElement("a"),
-                url = URL.createObjectURL(file);
+            url = URL.createObjectURL(file);
         a.href = url;
         a.download = filename;
         document.body.appendChild(a);
         a.click();
-        setTimeout(function() {
+        setTimeout(function () {
             document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);  
-        }, 0); 
+            window.URL.revokeObjectURL(url);
+        }, 0);
+    }
+}
+
+function readFile(input) {
+    let file = input.files[0];
+
+    let reader = new FileReader();
+
+    reader.readAsText(file);
+
+    reader.onload = function () {
+        console.log(reader.result);
+        var newEntries = new Map(Object.entries(JSON.parse(reader.result)));
+        for (const [key, value] of newEntries) {
+            loadEntry(key, value);
+        }
+        console.log(entries);
+    };
+
+    reader.onerror = function () {
+        console.log(reader.error);
+    };
+
+}
+
+function loadEntry(key, value) {
+    document.getElementById("warning").innerHTML = "";
+    if (availableNumbers.length < 1) {
+        document.getElementById("warning").innerHTML = "No tickets left!";
+        return;
+    }
+    
+    var name = value;
+    var customNumber = Number(key);
+    console.log(customNumber);
+    if (availableNumbers.includes(customNumber)) {
+        var index = availableNumbers.indexOf(customNumber);
+        var num = availableNumbers[index];
+        entries.set(num, name);
+        document.getElementById("results").innerHTML += "<tr><td>" + name + "</td><td>" + num + "</td></tr>";
+        availableNumbers.splice(index, 1);
+        updateTicketCount();
+    }
+    else if (validNumbers.includes(customNumber)) {
+        document.getElementById("warning").innerHTML = "Number already taken!";
+    }
+    else {
+        document.getElementById("warning").innerHTML = "Number is invalid!";
     }
 }
